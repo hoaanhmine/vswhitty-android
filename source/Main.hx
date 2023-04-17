@@ -76,11 +76,12 @@ class Main extends Sprite
 		#if !debug
 		initialState = TitleState;
 		#end
-
+     SUtil.uncaughtErrorHandler();
+     
 		game = new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen);
 
 		addChild(game);
-
+    
 		#if !mobile
 		fpsCounter = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsCounter);

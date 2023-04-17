@@ -36,6 +36,7 @@ class Main extends Sprite
 	}
 
 	public function new()
+SUtil.uncaughtErrorHandler();
 	{
 		super();
 
@@ -76,12 +77,11 @@ class Main extends Sprite
 		#if !debug
 		initialState = TitleState;
 		#end
-     SUtil.uncaughtErrorHandler();
-     
+    SUtil.checkFiles();
 		game = new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen);
 
 		addChild(game);
-    
+
 		#if !mobile
 		fpsCounter = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsCounter);

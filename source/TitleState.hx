@@ -61,9 +61,8 @@ FlxG.android.preventDefaultKeys = [BACK];
 		#if android || FlxG.android.justReleased.BACK #end
 	
 		#if sys
-		if (!sys.FileSystem.exists(Sys.getCwd() + "/assets/replays"))
-			sys.FileSystem.createDirectory(Sys.getCwd() + "/assets/replays");
-     	SUtil.getStorageDirectory() + 
+
+	SUtil.getPath() + 
 		#end
 
 		@:privateAccess

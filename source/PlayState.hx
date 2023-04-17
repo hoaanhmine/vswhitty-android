@@ -2825,8 +2825,7 @@ class PlayState extends MusicBeatState
 
 	function endSong():Void
 	{
-		if (!loadRep)
-			rep.SaveReplay();
+		
 
 		if (FlxG.save.data.fpsCap > 290)
 			(cast (Lib.current.getChildAt(0), Main)).setFPSCap(290);

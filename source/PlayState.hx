@@ -1027,6 +1027,14 @@ class PlayState extends MusicBeatState
 		scoreTxt.cameras = [camHUD];
 		replayTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
+
+
+		#if mobile
+		addMobileControls(false);
+		mobileControls.visible = false;
+		#end
+
+
 		if (FlxG.save.data.songPosition)
 		{
 			songPosBG.cameras = [camHUD];
@@ -1611,6 +1619,11 @@ class PlayState extends MusicBeatState
 
 	function startCountdown():Void
 	{
+
+		#if mobile
+		mobileControls.visible = true;
+		#end
+
 		inCutscene = false;
 		trace(inCutscene);
 
@@ -2615,8 +2628,14 @@ class PlayState extends MusicBeatState
 			vocals.stop();
 			FlxG.sound.music.stop();
 
-			openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
-
+			if (PlayState.isStoryMode)
+			{
+				FlxG.switchState(new StoryMenuState());
+			}
+			else
+			{
+				FlxG.switchState(new FreeplayState());
+			}
 			#if windows
 			// Game Over doesn't get his own variable because it's only used here
 			DiscordClient.changePresence("GAME OVER -- " + SONG.song + " (" + storyDifficultyText + ") " + Ratings.GenerateLetterRank(accuracy),"\nAcc: " + HelperFunctions.truncateFloat(accuracy, 2) + "% | Score: " + songScore + " | Misses: " + misses  , iconRPC);
@@ -2826,6 +2845,9 @@ class PlayState extends MusicBeatState
 	function endSong():Void
 	{
 		
+		#if mobile
+		mobileControls.visible = false;
+		#end
 
 		if (FlxG.save.data.fpsCap > 290)
 			(cast (Lib.current.getChildAt(0), Main)).setFPSCap(290);
@@ -2876,7 +2898,7 @@ class PlayState extends MusicBeatState
 
 						if (SONG.validScore)
 						{
-							NGio.unlockMedal(60961);
+							//NGio.unlockMedal(60961);
 							Highscore.saveWeekScore(storyWeek, campaignScore, storyDifficulty);
 						}
 

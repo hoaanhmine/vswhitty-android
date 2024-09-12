@@ -93,13 +93,9 @@ class OptionsMenu extends MusicBeatState
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
 
-#if android
-var tipText:FlxText = new FlxText(10, 14, 0, 'Press C to customize your android controls', 16);
-tipText.setFormat(Paths.font('vcr.ttf'), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-tipText.borderSize = 2.4;
-tipText.scrollFactor.set();
-add(tipText);
-#end
+		#if mobile
+		addVirtualPad(UP_DOWN, A_B_C);
+		#end
 
 		super.create();
 	}
@@ -111,14 +107,13 @@ add(tipText);
 	{
 		super.update(elapsed);
 
-#if android
-if (virtualPad.buttonC.justPressed) {
-	#if android
-	removeVirtualPad();
-	#end
-	openSubState(new android.AndroidControlsSubState());
-}
-#end
+		#if mobile
+		if (virtualPad.buttonC.justPressed)
+		{
+			removeVirtualPad();
+			openSubState(new mobile.MobileControlsSubState());
+		}
+		#end
 
 			if (controls.BACK && !isCat)
 				FlxG.switchState(new MainMenuState());
@@ -136,9 +131,9 @@ if (virtualPad.buttonC.justPressed) {
 					}
 				curSelected = 0;
 			}
-			if (controls.UP_P)
+			if (#if !mobile controls.UP_P #else virtualPad.buttonUp.justPressed #end)
 				changeSelection(-1);
-			if (controls.DOWN_P)
+			if (#if !mobile controls.DOWN_P #else virtualPad.buttonDown.justPressed #end)
 				changeSelection(1);
 			
 			if (isCat)
@@ -233,9 +228,9 @@ if (virtualPad.buttonC.justPressed) {
 
 	function changeSelection(change:Int = 0)
 	{
-		#if !switch
-		// NGio.logEvent("Fresh");
-		#end
+		/*#if !switch
+		NGio.logEvent("Fresh");
+		#end*/
 		
 		FlxG.sound.play(Paths.sound("scrollMenu"), 0.4);
 

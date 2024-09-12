@@ -51,14 +51,16 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
+
+		#if mobile
+		FlxG.android.preventDefaultKeys = [BACK];
+		#end
+
+
 		#if polymod
 		polymod.Polymod.init({modRoot: "mods", dirs: ['introMod']});
 		#end
 		
-		#if android
-FlxG.android.preventDefaultKeys = [BACK];
-#end
-		#if android || FlxG.android.justReleased.BACK #end
 	
 		#if sys
 
@@ -89,10 +91,11 @@ FlxG.android.preventDefaultKeys = [BACK];
 
 		// NGio.noLogin(APIStuff.API);
 
-		#if ng
+		/*#if ng
 		var ng:NGio = new NGio(APIStuff.API, APIStuff.EncKey);
 		trace('NEWGROUNDS LOL');
 		#end
+		 */
 
 		FlxG.save.bind('funkin', 'ninjamuffin99');
 
@@ -295,15 +298,25 @@ FlxG.android.preventDefaultKeys = [BACK];
 			#end
 		}
 
+		#if mobile
+		for (touch in FlxG.touches.list)
+		{
+			if (touch.justPressed)
+			{
+				pressedEnter = true;
+			}
+		}
+		#end
+
 		if (pressedEnter && !transitioning && skippedIntro)
 		{
-			#if !switch
+			/*#if !switch
 			NGio.unlockMedal(60960);
 
 			// If it's Friday according to da clock
 			if (Date.now().getDay() == 5)
 				NGio.unlockMedal(61034);
-			#end
+			#end*/
 
 			titleText.animation.play('press');
 

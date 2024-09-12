@@ -11,7 +11,7 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
-import io.newgrounds.NG;
+// import io.newgrounds.NG;
 import lime.app.Application;
 
 #if windows
@@ -118,6 +118,10 @@ class MainMenuState extends MusicBeatState
 
 		changeItem();
 
+		#if mobile
+		addVirtualPad(UP_DOWN, A_B_C);
+		#end
+
 		super.create();
 	}
 
@@ -125,6 +129,13 @@ class MainMenuState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
+		#if mobile
+		if (virtualPad.buttonC.justPressed)
+		{
+		  FlxG.switchState(new mobile.MobileControlsState());
+		}
+		#end
+
 		if (FlxG.sound.music.volume < 0.8)
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
@@ -132,14 +143,14 @@ class MainMenuState extends MusicBeatState
 
 		if (!selectedSomethin)
 		{
-			if (controls.UP_P)
-			{
+			if (#if !mobile controls.UP_P #else virtualPad.buttonUp.justPressed #end)
+				{
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 				changeItem(-1);
 			}
 
-			if (controls.DOWN_P)
-			{
+			if (#if !mobile controls.DOWN_P #else virtualPad.buttonDown.justPressed #end)
+				{
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 				changeItem(1);
 			}

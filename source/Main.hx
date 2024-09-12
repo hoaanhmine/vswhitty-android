@@ -74,8 +74,6 @@ class Main extends Sprite
 		#if !debug
 		initialState = TitleState;
 		#end
-		game = new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen)
-		addChild(game);
 	}
 
 	var game:FlxGame;

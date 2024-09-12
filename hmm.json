@@ -37,6 +37,13 @@
 			"name":"polymod",
 			"type":"haxelib",
 			"version": "1.7.0"
-		}
+		},
+		{
+      "name": "extension-androidtools",
+      "type": "git",
+      "dir": null,
+      "ref": "main",
+      "url": "https://github.com/MAJigsaw77/extension-androidtools/"
+ 		}	
 	]
 }
